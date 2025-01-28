@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="updates" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;gpaul988&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gpaul988/Grey-De-Site.git&quot;,
+    &quot;accountId&quot;: &quot;2b3407e6-931e-4a57-865e-80dca9f5c39d&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2sA3pr0DwNBb4ALuGP1aRAVDMR0" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/willk/Music&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\willk\\WebstormProjects\\Grey-De-Site\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.220" />
+        <option value="bundled-python-sdk-0fc6c617c4bd-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.220" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="" />
+      <created>1737884738132</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737884738132</updated>
+      <workItem from="1737884741331" duration="13702000" />
+      <workItem from="1738055153079" duration="936000" />
+      <workItem from="1738056141008" duration="549000" />
+    </task>
+    <task id="LOCAL-00001" summary="updated and corrected words">
+      <option name="closed" value="true" />
+      <created>1737885567346</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737885567346</updated>
+    </task>
+    <task id="LOCAL-00002" summary="updated files">
+      <option name="closed" value="true" />
+      <created>1737885587589</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737885587589</updated>
+    </task>
+    <task id="LOCAL-00003" summary="created backend app">
+      <option name="closed" value="true" />
+      <created>1737885617238</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737885617238</updated>
+    </task>
+    <task id="LOCAL-00004" summary="updated files">
+      <option name="closed" value="true" />
+      <created>1737896834282</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1737896834282</updated>
+    </task>
+    <task id="LOCAL-00005" summary="mysql detail added">
+      <option name="closed" value="true" />
+      <created>1737896863216</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1737896863216</updated>
+    </task>
+    <task id="LOCAL-00006" summary="backend setting updated with framework, middleware and installed apps">
+      <option name="closed" value="true" />
+      <created>1737897067873</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897067873</updated>
+    </task>
+    <task id="LOCAL-00007" summary="updated">
+      <option name="closed" value="true" />
+      <created>1737897088432</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897088432</updated>
+    </task>
+    <task id="LOCAL-00008" summary="created backend accounts  models">
+      <option name="closed" value="true" />
+      <created>1737897253990</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897253990</updated>
+    </task>
+    <task id="LOCAL-00009" summary="created backend accounts admin">
+      <option name="closed" value="true" />
+      <created>1737897314680</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897314680</updated>
+    </task>
+    <task id="LOCAL-00010" summary="created backend accounts serializers">
+      <option name="closed" value="true" />
+      <created>1737897452657</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897452657</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated backend accounts views">
+      <option name="closed" value="true" />
+      <created>1737897492432</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897492432</updated>
+    </task>
+    <task id="LOCAL-00012" summary="created backend accounts urls">
+      <option name="closed" value="true" />
+      <created>1737897555399</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897555399</updated>
+    </task>
+    <task id="LOCAL-00013" summary="updated backend/ backend accounts urls">
+      <option name="closed" value="true" />
+      <created>1737897706851</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1737897706851</updated>
+    </task>
+    <task id="LOCAL-00014" summary="updates">
+      <option name="closed" value="true" />
+      <created>1737904358321</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1737904358321</updated>
+    </task>
+    <task id="LOCAL-00015" summary="updates">
+      <option name="closed" value="true" />
+      <created>1737904387439</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1737904387439</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated and corrected words" />
+    <MESSAGE value="created backend app" />
+    <MESSAGE value="updated files" />
+    <MESSAGE value="mysql detail added" />
+    <MESSAGE value="backend setting updated with framework, middleware and installed apps" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="created backend accounts  models" />
+    <MESSAGE value="created backend accounts admin" />
+    <MESSAGE value="created backend accounts serializers" />
+    <MESSAGE value="updated backend accounts views" />
+    <MESSAGE value="created backend accounts urls" />
+    <MESSAGE value="updated backend/ backend accounts urls" />
+    <MESSAGE value="updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates" />
+  </component>
+</project>
