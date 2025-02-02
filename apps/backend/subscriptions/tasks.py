@@ -5,6 +5,7 @@ from subscriptions.models import UserSubscription
 import requests
 from django.core.mail import send_mail
 from django.conf import settings
+from models import Subscription
 
 @shared_task
 def auto_renew_subscriptions():
@@ -98,3 +99,17 @@ def send_renewal_reminder():
         )
 
     return f"Sent reminders to {expiring_users.count()} users."
+
+def check_all_subscriptions():
+    """Runs daily to update subscription statuses"""
+    subscriptions = Subscription.objects.all()
+    for subscription in subscriptions:
+        subscription.check_status()
+
+        # Check for monthly renewals
+        if subscription.plan.duration == 30:
+            subscription.check_status()
+
+        # Check for yearly renewals
+        elif subscription.plan.duration == 365:
+            subscription.check_status()
