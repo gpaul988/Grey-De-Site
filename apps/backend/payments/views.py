@@ -9,8 +9,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
-from models import Subscription, Payment, RefundRequest
-from serializers import SubscriptionSerializer
+from models import  Subscription, Payment, RefundRequest, PaymentGateway
+from serializers import SubscriptionSerializer, PaymentSerializer
 from authentication.permissions import IsSuperAdmin, IsAdminUser, IsAuthenticated
 from apps.backend.subscriptions.models import SubscriptionPlan, UserSubscription
 from backend.utils.email_utils import send_payment_notification
@@ -220,3 +220,26 @@ def process_refund(request):
         return Response({"message": "Refund request denied!"})
 
     return Response({"error": "Invalid action"}, status=400)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_payment(request):
+    """Creates a new payment with selected currency & gateway"""
+    user = request.user
+    amount = request.data.get("amount")
+    currency = request.data.get("currency", "USD")
+    gateway = request.data.get("gateway", PaymentGateway.PAYSTACK)
+
+    if gateway not in [choice[0] for choice in PaymentGateway.choices]:
+        return Response({"error": "Invalid payment gateway"}, status=400)
+
+    payment = Payment.objects.create(
+        user=user,
+        amount=amount,
+        currency=currency,
+        gateway=gateway,
+        reference=f"{user.id}-{now().timestamp()}-{random.randint(1000,9999)}",
+        status="pending"
+    )
+
+    return Response(PaymentSerializer(payment).data)
