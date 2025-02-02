@@ -14,10 +14,14 @@ openai.api_key = settings.OPENAI_API_KEY
 
 # Supported services
 SERVICES = [
-    "Web Design", "Web App Development", "AI Development", "Android Development",
-    "Blockchain Development", "Flutter Development", "iOS Development",
-    "React Development", "Python Development", "Django Development",
-    "SEO", "Social Media Marketing", "Ecommerce Development"
+    "Web Design", "Web App Development", "Web Development", "Wix Development", "WordPress Development",
+    "AI Development", "Android Development", "Blockchain Development", "Cross Platform Development",
+    "Flutter Development", "iOS Development", "Vue.js Development", "Squarespace Development", "Shopify Development",
+    "React Development", "PHP Development", "Next.js Development", "Node.js Development", "Laravel Development",
+    "Drupal Development", "Joomla Development", "CMS Development", "Angular Development", "Python Development",
+    "Django Development", "Ruby on Rails Development", "Mac Software Development", "React Native Development",
+    "Software Development", "Windows Software Development", "App Store Optimization", "SEO", "Social Media Marketing",
+    "Ecommerce Development"
 ]
 
 
