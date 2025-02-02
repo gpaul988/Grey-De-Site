@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
 from payments.models import Payment
 from django.conf import settings
+import requests
 
 class SubscriptionPlan(models.Model):
     """Subscription plans available for users."""
@@ -107,8 +108,39 @@ class Subscription(models.Model):
             self.save()
 
     def process_payment(self, payment):
-        """Process the payment using the selected gateway (Mock)"""
-        # TODO: Integrate actual payment gateway processing here
-        payment.status = "successful"
+        """Process the payment using the selected gateway"""
+        if payment.gateway == "paystack":
+            response = requests.post(
+                f"{settings.PAYSTACK_BASE_URL}/transaction/initialize",
+                headers={"Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}"},
+                json={
+                    "email": payment.user.email,
+                    "amount": int(payment.amount * 100),  # Convert to kobo
+                    "currency": payment.currency,
+                    "reference": payment.reference,
+                },
+            )
+        elif payment.gateway == "flutterwave":
+            response = requests.post(
+                f"{settings.FLUTTERWAVE_BASE_URL}/payments",
+                headers={"Authorization": f"Bearer {settings.FLUTTERWAVE_SECRET_KEY}"},
+                json={
+                    "tx_ref": payment.reference,
+                    "amount": str(payment.amount),
+                    "currency": payment.currency,
+                    "redirect_url": "https://your-redirect-url.com",
+                    "customer": {
+                        "email": payment.user.email,
+                    },
+                },
+            )
+        else:
+            raise ValueError("Unsupported payment gateway")
+
+        data = response.json()
+        if response.status_code == 200 and data.get("status") == "success":
+            payment.status = "successful"
+        else:
+            payment.status = "failed"
         payment.save()
-        return True
+        return payment.status == "successful"
