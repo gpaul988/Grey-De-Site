@@ -3,8 +3,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.utils.timezone import now, timedelta
-from models import SubscriptionPlan, UserSubscription
+from models import SubscriptionPlan, UserSubscription, Subscription
 from serializers import SubscriptionPlanSerializer, UserSubscriptionSerializer
+from django.core.mail import send_mail
 import requests
 from django.conf import settings
 
@@ -138,3 +139,42 @@ def get_user_subscription(request):
             return Response({"message": "Subscription expired!"}, status=400)
     except UserSubscription.DoesNotExist:
         return Response({"message": "No active subscription found!"}, status=404)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def notify_users():
+    """Send notifications for expiring subscriptions"""
+    today = now().date()
+    expiring_subscriptions = Subscription.objects.filter(
+        status="active",
+        end_date__lte=today + timedelta(days=60)  # Check for subscriptions expiring within the next 60 days
+    )
+
+    for subscription in expiring_subscriptions:
+        days_to_expiry = (subscription.end_date - today).days
+
+        if subscription.plan.duration == 7:  # weekly subscription
+            if days_to_expiry <= 3:
+                send_mail(
+                    subject="Your Subscription is Expiring Soon",
+                    message=f"Dear {subscription.user.username},\n\nYour subscription for {subscription.plan.name} is expiring on {subscription.end_date}. Please renew it to avoid service interruption.",
+                    from_email="support@greyinfotech.com.ng",
+                    recipient_list=[subscription.user.email],
+                )
+        elif subscription.plan.duration == 30:  # Monthly subscription
+            if days_to_expiry <= 7:
+                send_mail(
+                    subject="Your Subscription is Expiring Soon",
+                    message=f"Dear {subscription.user.username},\n\nYour subscription for {subscription.plan.name} is expiring on {subscription.end_date}. Please renew it to avoid service interruption.",
+                    from_email="support@greyinfotech.com.ng",
+                    recipient_list=[subscription.user.email],
+                )
+        elif subscription.plan.duration == 365:  # Yearly subscription
+            if days_to_expiry <= 60 and days_to_expiry % 3 == 0:  # Twice a week for the last 2 months
+                send_mail(
+                    subject="Your Subscription is Expiring Soon",
+                    message=f"Dear {subscription.user.username},\n\nYour subscription for {subscription.plan.name} is expiring on {subscription.end_date}. Please renew it to avoid service interruption.",
+                    from_email="support@greyinfotech.com.ng",
+                    recipient_list=[subscription.user.email],
+                )
+
+    return Response({"message": "Notifications sent successfully!"})
