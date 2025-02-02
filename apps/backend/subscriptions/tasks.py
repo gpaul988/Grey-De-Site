@@ -113,3 +113,15 @@ def check_all_subscriptions():
         # Check for yearly renewals
         elif subscription.plan.duration == 365:
             subscription.check_status()
+
+def check_monthly_subscriptions():
+    """Runs monthly to update subscription statuses"""
+    monthly_subscriptions = Subscription.objects.filter(plan__duration=30)
+    for subscription in monthly_subscriptions:
+        subscription.check_status()
+
+def check_yearly_subscriptions():
+    """Runs yearly to update subscription statuses"""
+    yearly_subscriptions = Subscription.objects.filter(plan__duration=365)
+    for subscription in yearly_subscriptions:
+        subscription.check_status()
