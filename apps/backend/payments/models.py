@@ -47,7 +47,7 @@ class RefundRequest(models.Model):
         ("denied", "Denied"),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE)
     reason = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
