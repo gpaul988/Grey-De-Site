@@ -2,6 +2,7 @@ from django.db import models
 from company.models import Company
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 CURRENCY_CHOICES = [
@@ -51,21 +52,30 @@ class Payment(models.Model):
 
 
 class RefundRequest(models.Model):
-    STATUS_CHOICES = [
-        ("pending", "Pending"),
-        ("approved", "Approved"),
-        ("denied", "Denied"),
-    ]
-
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     payment = models.OneToOneField(Payment, on_delete=models.CASCADE)
     reason = models.TextField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
+    status = models.CharField(max_length=20, choices=[
+        ("pending", "Pending"),
+        ("approved", "Approved"),
+        ("rejected", "Rejected"),
+        ("processed", "Processed")
+    ], default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
-    reviewed_at = models.DateTimeField(null=True, blank=True)
+    processed_at = models.DateTimeField(null=True, blank=True)
 
-    def __str__(self):
-        return f"Refund {self.status} - {self.payment.reference}"
+    def approve(self):
+        """Approve the refund and process it"""
+        self.status = "approved"
+        self.processed_at = now()
+        self.save()
+        # Process refund via the payment gateway (implementation later)
+
+    def reject(self):
+        """Reject the refund request"""
+        self.status = "rejected"
+        self.processed_at = now()
+        self.save()
 
 
 class Subscription(models.Model):
