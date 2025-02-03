@@ -45,24 +45,21 @@ class Service(models.Model):
         return self.name
 
 class Payment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("successful", "Successful"),
+        ("failed", "Failed"),
+        ("refunded", "Refunded"),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payments')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default='USD')
-    gateway = models.CharField(max_length=20, choices=PaymentGateway.choices)
+    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default="USD")
+    gateway = models.CharField(max_length=20, choices=PaymentGateway.choices, default=PaymentGateway.PAYSTACK)
     reference = models.CharField(max_length=255, unique=True)
-    status = models.CharField(max_length=20, default='pending')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    refunded_at = models.DateTimeField(null=True, blank=True)
-
-    def mark_as_successful(self):
-        self.status = 'successful'
-        self.save()
-
-    def mark_as_refunded(self):
-        self.status = 'refunded'
-        self.refunded_at = now()
-        self.save()
+    refunded_at = models.DateTimeField(null=True, blank=True)  # Store refund time
 
     def __str__(self):
-        return f"{self.user} - {self.amount} {self.currency} ({self.status})"
+        return f"{self.user} - {self.amount} {self.currency} via {self.gateway} ({self.status})"
