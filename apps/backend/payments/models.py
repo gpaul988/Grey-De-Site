@@ -3,6 +3,7 @@ from company.models import Company
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils.timezone import now
+from services.models import Service
 from django.utils.translation import gettext_lazy as _
 
 CURRENCY_CHOICES = [
@@ -90,3 +91,21 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.company.name} - {self.plan}"
+
+class Invoice(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    payment = models.OneToOneField(Payment, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    invoice_number = models.CharField(max_length=50, unique=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    issued_at = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateTimeField()
+
+    def generate_invoice_number(self):
+        """Create a unique invoice number"""
+        return f"INV-{self.payment.id}-{int(self.issued_at.timestamp())}"
+
+    def save(self, *args, **kwargs):
+        if not self.invoice_number:
+            self.invoice_number = self.generate_invoice_number()
+        super().save(*args, **kwargs)
