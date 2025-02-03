@@ -1,5 +1,4 @@
 from rest_framework.decorators import api_view, permission_classes
-from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
@@ -36,23 +35,19 @@ def book_service(request):
 
     return Response({"message": "Booking created, proceed with payment", "booking_id": booking.id})
 
-
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
-def update_service_status(request):
-    """Admin updates service completion status"""
-    booking_id = request.data.get("booking_id")
-    status = request.data.get("status")  # 'in_progress', 'completed', 'canceled'
+def update_service_status(request, booking_id):
+    """Admins can update service progress"""
+    status = request.data.get("status")
 
-    booking = get_object_or_404(ServiceBooking, id=booking_id)
-
-    if status == "completed":
-        booking.status = "completed"
-        booking.completed_at = now()
-    elif status in ["in_progress", "canceled"]:
-        booking.status = status
-    else:
+    if status not in ["pending", "in_progress", "completed", "canceled"]:
         return Response({"error": "Invalid status"}, status=400)
 
-    booking.save()
-    return Response({"message": f"Service status updated to {status}"})
+    try:
+        booking = ServiceBooking.objects.get(id=booking_id)
+        booking.status = status
+        booking.save()
+        return Response({"message": f"Service status updated to {status}"})
+    except ServiceBooking.DoesNotExist:
+        return Response({"error": "Booking not found"}, status=404)
