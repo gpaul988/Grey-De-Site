@@ -192,32 +192,24 @@ def request_refund(request):
 
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
-def process_refund(request):
-    """Admin approves or denies a refund"""
-    refund_id = request.data.get("refund_id")
-    action = request.data.get("action")  # 'approve' or 'deny'
+def process_refund(request, refund_id):
+    """Admins can approve or reject refund requests"""
+    action = request.data.get("action")  # "approve" or "reject"
 
-    refund_request = get_object_or_404(RefundRequest, id=refund_id)
+    try:
+        refund = RefundRequest.objects.get(id=refund_id, status="pending")
 
-    if action == "approve":
-        refund_request.status = "approved"
-        refund_request.reviewed_at = now()
-        refund_request.save()
-
-        # Update payment status
-        refund_request.payment.status = "refunded"
-        refund_request.payment.refunded_at = now()
-        refund_request.payment.save()
-
-        return Response({"message": "Refund approved successfully!"})
-
-    elif action == "deny":
-        refund_request.status = "denied"
-        refund_request.reviewed_at = now()
-        refund_request.save()
-        return Response({"message": "Refund request denied!"})
-
-    return Response({"error": "Invalid action"}, status=400)
+        if action == "approve":
+            refund.approve()
+            # Logic to process actual refund via payment gateway (later)
+            return Response({"message": "Refund approved and processed"})
+        elif action == "reject":
+            refund.reject()
+            return Response({"message": "Refund rejected"})
+        else:
+            return Response({"error": "Invalid action"}, status=400)
+    except RefundRequest.DoesNotExist:
+        return Response({"error": "Refund request not found or already processed"}, status=400)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
