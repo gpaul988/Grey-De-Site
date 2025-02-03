@@ -175,22 +175,20 @@ def flutterwave_initialize_payment(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def request_refund(request):
-    """Allow users to request a refund"""
+    """Users can request a refund if a service is incomplete or has an issue"""
     user = request.user
-    reference = request.data.get("reference")
+    payment_id = request.data.get("payment_id")
     reason = request.data.get("reason")
 
-    payment = get_object_or_404(Payment, reference=reference, user=user)
+    try:
+        payment = Payment.objects.get(id=payment_id, user=user, status="successful")
+        if RefundRequest.objects.filter(payment=payment).exists():
+            return Response({"error": "Refund request already exists for this payment"}, status=400)
 
-    if payment.status != "successful":
-        return Response({"error": "Only successful payments can be refunded"}, status=400)
-
-    if RefundRequest.objects.filter(payment=payment).exists():
-        return Response({"error": "Refund request already exists"}, status=400)
-
-    refund_request = RefundRequest.objects.create(user=user, payment=payment, reason=reason)
-
-    return Response({"message": "Refund request submitted", "refund_id": refund_request.id})
+        refund = RefundRequest.objects.create(user=user, payment=payment, reason=reason)
+        return Response({"message": "Refund request submitted", "refund_id": refund.id})
+    except Payment.DoesNotExist:
+        return Response({"error": "Invalid payment ID or payment not successful"}, status=400)
 
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
