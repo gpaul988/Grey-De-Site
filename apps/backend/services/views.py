@@ -3,23 +3,39 @@ from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from .models import ServiceBooking
+from .models import ServiceBooking, Service, PaymentGateway, Payment
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def book_service(request):
-    """Book a service and initiate payment."""
+    """User books a service and makes payment"""
     user = request.user
-    service = request.data.get("service")
-    price = request.data.get("price")
+    service_id = request.data.get("service_id")
+    amount = request.data.get("amount")
     currency = request.data.get("currency", "USD")
+    gateway = request.data.get("gateway", PaymentGateway.PAYSTACK)
+    scheduled_date = request.data.get("scheduled_date")
 
-    if not service or not price:
-        return Response({"error": "Service and price required"}, status=400)
+    service = Service.objects.get(id=service_id)
 
-    booking = ServiceBooking.objects.create(user=user, service=service, price=price, currency=currency)
+    payment = Payment.objects.create(
+        user=user,
+        amount=amount,
+        currency=currency,
+        gateway=gateway,
+        reference=f"{user.id}-{now().timestamp()}",
+        status="pending"
+    )
 
-    return Response({"message": "Service booked successfully!", "booking_id": booking.id})
+    booking = ServiceBooking.objects.create(
+        user=user,
+        service=service,
+        payment=payment,
+        scheduled_date=scheduled_date
+    )
+
+    return Response({"message": "Booking created, proceed with payment", "booking_id": booking.id})
+
 
 @api_view(["POST"])
 @permission_classes([IsAdminUser])
