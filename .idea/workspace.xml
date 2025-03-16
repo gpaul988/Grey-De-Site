@@ -4,73 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="Added `Invoice` model to generate and manage invoices for services.">
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/payments/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/services/llm_analysis.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/services/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/services/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/subscriptions/admin_views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/backend/subscriptions/celery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/AdminBookingList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/AdminServiceList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Bookingform.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Checkout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/CurrencyConverter.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/CurrencySelector.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/InvoiceList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Payment.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/RefundButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceDetails.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceProgress.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceTracker.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/SubscriptionPlans.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/SubscriptionStatus.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/admin/AdminPayments.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/components/admin/AdminSubscriptions.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/frontend/utils/currencyConverter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Grey-De-Site.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Grey-De-Site.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/grey_infotech_limited._ykYRA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/ai/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/utils/email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/api/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/bookings/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/authentication/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/authentication/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/invoices/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/backend/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/celery.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/llm_service/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/invoices/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/media/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/choices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/payments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/payments/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/payments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/services/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/refund.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/services/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/services/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/services/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/services/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/frontend/components/FileUpload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/FileUpload.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/frontend/components/PaymentForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/PaymentForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/frontend/components/RefundForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/RefundForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/frontend/components/Servicebooking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/Servicebooking.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/frontend/pages/admin/subscriptions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/pages/admin/subscriptions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-    </list>
+    <list default="true" id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="updated" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -200,8 +134,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-PY-243.24978.54" />
-        <option value="bundled-python-sdk-91e3b7efe1d4-466328ff949b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.24978.54" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
+        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
       </set>
     </attachedChunks>
   </component>
@@ -224,22 +158,7 @@
       <workItem from="1738805887860" duration="53606000" />
       <workItem from="1740567373227" duration="205000" />
       <workItem from="1741528788993" duration="584000" />
-    </task>
-    <task id="LOCAL-00041" summary="added views for handling file uploads">
-      <option name="closed" value="true" />
-      <created>1738460436828</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460436828</updated>
-    </task>
-    <task id="LOCAL-00042" summary="added user subscription pages">
-      <option name="closed" value="true" />
-      <created>1738460805056</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460805056</updated>
+      <workItem from="1742137695557" duration="1152000" />
     </task>
     <task id="LOCAL-00043" summary="added admin subscription management page">
       <option name="closed" value="true" />
@@ -617,7 +536,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738579172905</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="updated">
+      <option name="closed" value="true" />
+      <created>1742138105574</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1742138105574</updated>
+    </task>
+    <task id="LOCAL-00091" summary="updated">
+      <option name="closed" value="true" />
+      <created>1742138144237</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1742138144237</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -647,12 +582,12 @@
     <MESSAGE value="Add refund request handling in payments app" />
     <MESSAGE value="Add payment verification and subscription activation endpoints" />
     <MESSAGE value="Add payment initialization and verification endpoints" />
-    <MESSAGE value="updated" />
     <MESSAGE value="Add RefundForm component for refund requests" />
     <MESSAGE value="Add service booking and status update endpoints" />
     <MESSAGE value="Add ServiceStatus component for updating service status&#10;&#10;- Created `ServiceStatus` component to allow admins to update the status of a service booking.&#10;- Implemented form fields for booking ID and status selection.&#10;- Added `handleStatusUpdate` function to submit status updates via API.&#10;- Utilized `useState` hook to manage form state.&#10;- Styled form elements with basic CSS classes." />
     <MESSAGE value="Added `Invoice` model to generate and manage invoices for services." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added `Invoice` model to generate and manage invoices for services." />
+    <MESSAGE value="updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
