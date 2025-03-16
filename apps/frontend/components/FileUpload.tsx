@@ -3,52 +3,45 @@ import axios from "axios";
 
 const FileUpload = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState("");
-  const [recommendedService, setRecommendedService] = useState("");
+  const [analysisResult, setAnalysisResult] = useState("");
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files ? e.target.files[0] : null);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
-  const handleFileUpload = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!file) {
-      setError("Please select a file to upload.");
-      return;
-    }
+  const handleUpload = async () => {
+    if (!file) return alert("Please select a file");
 
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/upload-file/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axios.post("/api/upload-file", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setRecommendedService(response.data.recommended_service);
-      setError(""); // Clear any previous errors
+      setAnalysisResult(response.data.analysis);
     } catch (error) {
-      setError("Failed to upload file. Please try again.");
+      console.error("Error uploading file:", error);
+      alert("Error uploading file");
     }
   };
 
   return (
-    <div className="p-6 max-w-lg mx-auto">
-      <form onSubmit={handleFileUpload} className="space-y-4">
-        <input
-          type="file"
-          onChange={handleFileChange}
-          className="border p-2 w-full"
-        />
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 w-full">
-          Upload File
-        </button>
-      </form>
-
-      {error && <p className="text-red-500">{error}</p>}
-      {recommendedService && <p className="text-green-500 mt-4">Recommended Service: {recommendedService}</p>}
+    <div className="p-4 border rounded">
+      <h2 className="text-lg font-bold">Upload a File for Analysis</h2>
+      <input type="file" onChange={handleFileChange} className="mt-2" />
+      <button onClick={handleUpload} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+        Upload & Analyze
+      </button>
+      {analysisResult && (
+        <div className="mt-4 p-2 border rounded bg-gray-100">
+          <h3 className="font-bold">LLM Analysis Result:</h3>
+          <p>{analysisResult}</p>
+        </div>
+      )}
     </div>
   );
 };

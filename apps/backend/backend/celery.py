@@ -14,3 +14,9 @@ celery_app.conf.beat_schedule = {
         "schedule": crontab(day_of_week='1', hour='9', minute='0'),  # Every Monday at 9 AM
     },
 }
+
+@celery_app.task
+def send_expiry_notifications():
+    """Send notifications to users before expiry"""
+    from subscriptions.tasks import notify_users_about_expiry
+    notify_users_about_expiry()

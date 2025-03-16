@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Subscription, Payment, PaymentGateway
+from .models import Subscription, Payment, PaymentGateway
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +17,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         return value
 
     def validate_currency(self, value):
-        valid_currencies = ['USD', 'NGN', 'EUR']  # Add more as needed
+        valid_currencies = ['USD', 'NGN', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'INR']
         if value not in valid_currencies:
             raise serializers.ValidationError(f"Currency must be one of {valid_currencies}.")
         return value

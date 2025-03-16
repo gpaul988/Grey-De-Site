@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'ai',
     'llm_service',
     'services',
+    'invoices',
+    'bookings',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'
@@ -119,7 +121,7 @@ DATABASES = {
         'USER': 'graham',
         'PASSWORD': '!Uriel2Graham3,',
         'HOST': 'localhost',
-        'PORT': '3006',
+        'PORT': '3306',
     }
 }
 

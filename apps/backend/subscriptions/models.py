@@ -1,9 +1,14 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils.timezone import now, timedelta
-from payments.models import Payment
-from django.conf import settings
 import requests
+from django.db import models
+from datetime import datetime
+from django.conf import settings
+from payments.models import Payment
+from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
+from django.utils.timezone import now, timedelta
+
+
+User = get_user_model()
 
 class SubscriptionPlan(models.Model):
     """Subscription plans available for users."""
@@ -15,7 +20,8 @@ class SubscriptionPlan(models.Model):
 
     name = models.CharField(max_length=200, choices=PLAN_CHOICES, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Price in local currency
-    duration = models.IntegerField(help_text="Duration in days")  # E.g., 30 for monthly plan
+    duration = models.IntegerField()  # E.g., 30 for monthly plan
+    features = models.TextField()  # List of features included in the plan
     grace_period = models.IntegerField(default=7)  # Grace period in days
     currency = models.CharField(max_length=10, default='USD')  # Currency for the plan
 
@@ -27,7 +33,8 @@ class SubscriptionPlan(models.Model):
 class UserSubscription(models.Model):
     """Tracks which users are subscribed to which plans."""
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE, null=True)
+    plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
+    payment_reference = models.CharField(max_length=255, null=True, blank=True)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
     status = models.CharField(max_length=20, choices=[
@@ -35,11 +42,16 @@ class UserSubscription(models.Model):
         ('expired', 'Expired'),
         ('grace', 'Grace Period')
     ], default='active')
+    auto_renew = models.BooleanField(default=True)  # Enable auto-renewal
 
     def is_active(self):
         """Check if subscription is still valid"""
-        from django.utils.timezone import now
-        return self.end_date > now()
+        return self.end_date >= datetime.now()
+
+    def extend_subscription(self):
+        """Extend subscription based on the plan duration"""
+        self.end_date += timedelta(days=self.plan.duration)
+        self.save()
 
     def is_within_grace_period(self):
         """Checks if subscription is still within grace period"""
@@ -56,14 +68,30 @@ class Subscription(models.Model):
         ("canceled", "Canceled"),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subscriptions")
+    plan = models.OneToOneField(SubscriptionPlan, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10, default="USD")
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="active")
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
     grace_period_end = models.DateTimeField(null=True, blank=True)
-    auto_renew = models.BooleanField(default=True)  # Enables auto-renewal
+    auto_renewal = models.BooleanField(default=True)  # Enables auto-renewal
+
+    @property
+    def plan_name(self):
+        return self.plan.name
+
+    def save(self, *args, **kwargs):
+        """Automatically set grace period end when subscription expires"""
+        if self.status == "expired" and not self.grace_period_end:
+            self.grace_period_end = self.end_date + timedelta(days=5)  # 5-day grace period
+            self.status = "grace"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.plan_name} ({self.status})"
 
     def check_status(self):
         """Auto-update status based on end date"""
@@ -71,7 +99,7 @@ class Subscription(models.Model):
             return
 
         if now() >= self.end_date:
-            if self.auto_renew:
+            if self.auto_renewal:
                 self.renew_subscription()
             else:
                 self.status = "grace_period"
@@ -83,31 +111,13 @@ class Subscription(models.Model):
             self.save()
 
     def renew_subscription(self):
-        """Automatically renew subscription if payment succeeds"""
-        new_payment = Payment.objects.create(
-            user=self.user,
-            amount=self.plan.price,
-            currency=self.plan.currency,
-            gateway=self.payment.gateway,
-            reference=f"{self.user.id}-{now().timestamp()}",
-            status="pending"
-        )
-
-        # Simulate a payment gateway response
-        payment_success = self.process_payment(new_payment)
-
-        if payment_success:
-            self.status = "active"
-            self.start_date = now()
-            self.end_date = now() + timedelta(days=self.plan.duration)
-            self.payment = new_payment
-            self.save()
-        else:
-            self.status = "grace_period"
-            self.grace_period_end = self.end_date + timedelta(days=7)
+        """Automatically renew the subscription if enabled"""
+        if self.auto_renewal:
+            self.end_date += timedelta(days=self.plan.duration)
             self.save()
 
-    def process_payment(self, payment):
+    @staticmethod
+    def process_payment(payment):
         """Process the payment using the selected gateway"""
         if payment.gateway == "paystack":
             response = requests.post(
@@ -144,3 +154,25 @@ class Subscription(models.Model):
             payment.status = "failed"
         payment.save()
         return payment.status == "successful"
+
+    def is_active(self):
+        return self.end_date >= datetime.now()
+
+    def enter_grace_period(self):
+        """Extend grace period by 7 days after expiration"""
+        self.grace_period_end = self.end_date + timedelta(days=7)
+        self.save()
+
+    def extend_subscription(self):
+        """Extend subscription based on the plan duration"""
+        self.end_date += timedelta(days=self.plan.duration)
+        self.save()
+
+    def send_expiry_notification(self):
+        """Send email notification to user about subscription expiry"""
+        send_mail(
+            subject="Subscription Expiry Notice",
+            message=f"Hello {self.user.username}, your subscription is expiring soon. Renew now to avoid interruption.",
+            from_email="support@greyinfotech.com",
+            recipient_list=[self.user.email],
+        )

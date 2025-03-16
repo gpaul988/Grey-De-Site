@@ -4,66 +4,93 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils.timezone import now
 from services.models import Service
-from django.utils.translation import gettext_lazy as _
+from bookings.models import Booking
+from django.contrib.auth import get_user_model
 
-CURRENCY_CHOICES = [
-    ("NGN", "Nigerian Naira"),
-    ("USD", "US Dollar"),
-    ("GHS", "Ghanaian Cedi"),
-    ("ZAR", "South African Rand"),
-    ("EUR", "Euro"),
-    ("GBP", "British Pound Sterling"),
-    ("INR", "Indian Rupee"),
-    ("JPY", "Japanese Yen"),
-    ("CAD", "Canadian Dollar"),
-]
 
-PAYMENT_GATEWAY_CHOICES = [
-    ("paystack", "Paystack"),
-    ("flutterwave", "Flutterwave"),
-]
+user = get_user_model()
 
+class Currency(models.Model):
+    """Stores supported currencies and exchange rates"""
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=10, unique=True)
+    symbol = models.CharField(max_length=10)
+    exchange_rate = models.DecimalField(max_digits=10, decimal_places=4)
+
+    def __str__(self):
+        return f"{self.name} ({self.code})"
+
+class CurrencyExchangeRate(models.Model):
+    """Stores exchange rates for multi-currency support"""
+    currency_code = models.CharField(max_length=10, unique=True)
+    exchange_rate = models.DecimalField(max_digits=10, decimal_places=4)  # Relative to USD
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.currency_code} - {self.exchange_rate}"
 
 class PaymentGateway(models.TextChoices):
-    PAYSTACK = "paystack", _("Paystack")
-    FLUTTERWAVE = "flutterwave", _("Flutterwave")
-
+    PAYSTACK = 'paystack', 'Paystack'
+    FLUTTERWAVE = 'flutterwave', 'Flutterwave'
 
 class Payment(models.Model):
+    """Tracks payments for service bookings"""
     STATUS_CHOICES = [
         ("pending", "Pending"),
         ("successful", "Successful"),
         ("failed", "Failed"),
-        ("refunded", "Refunded"),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="payments_from_payments")
+    booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
+    provider = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    currency = models.CharField(max_length=10, choices=CURRENCY_CHOICES, default="USD")
-    gateway = models.CharField(max_length=20, choices=PAYMENT_GATEWAY_CHOICES, default="PaymentGateway.PAYSTACK")
-    reference = models.CharField(max_length=255, unique=True)
-    status = models.CharField(max_length=20,
-                              choices=[("pending", "Pending"), ("successful", "Successful"), ("failed", "Failed")],
-                              default="pending")
+    currency = models.CharField(max_length=10, default="USD")
+    gateway = models.CharField(max_length=50)
+    reference = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
+    transaction_id = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    refunded_at = models.DateTimeField(null=True, blank=True)  # Store refund time
+    updated_at = models.DateTimeField(auto_now=True)
+    refunded_at = models.DateTimeField(null=True, blank=True)
+
+    def get_currency_symbol(self):
+        currency_symbols = {
+            "USD": "$",
+            "EUR": "€",
+            "GBP": "£",
+            "NGN": "₦",
+            "JPY": "¥",
+            "INR": "₹",
+            "AUD": "A$",
+            "CAD": "C$",
+            "CHF": "CHF",
+            "CNY": "¥",
+        }
+        return currency_symbols.get(self.currency, "$")
 
     def __str__(self):
-        return f"{self.user} - {self.amount} {self.currency} via {self.gateway} ({self.status})"
-
+        return f"{self.user.username} - {self.transaction_id} {self.amount} {self.currency} ({self.status})"
 
 class RefundRequest(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    payment = models.OneToOneField(Payment, on_delete=models.CASCADE)
-    reason = models.TextField()
-    status = models.CharField(max_length=20, choices=[
+    """Stores refund requests for payments"""
+    STATUS_CHOICES = [
         ("pending", "Pending"),
         ("approved", "Approved"),
         ("rejected", "Rejected"),
-        ("processed", "Processed")
-    ], default="pending")
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
+    reason = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
+    requested_at = models.DateTimeField(auto_now_add=True)
     processed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Refund - {self.user.email} - {self.user.username} - {self.payment.transaction_id} ({self.status})"
+
 
     def approve(self):
         """Approve the refund and process it"""
@@ -77,7 +104,6 @@ class RefundRequest(models.Model):
         self.status = "rejected"
         self.processed_at = now()
         self.save()
-
 
 class Subscription(models.Model):
     company = models.OneToOneField(Company, on_delete=models.CASCADE)

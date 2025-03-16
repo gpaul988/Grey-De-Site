@@ -1,21 +1,35 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-const RefundForm = () => {
-  const [paymentId, setPaymentId] = useState("");
+interface RefundFormProps {
+  transactionId: string;
+}
+
+const RefundForm: React.FC<RefundFormProps> = ({ transactionId }) => {
   const [reason, setReason] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleRefundRequest = async () => {
-    const { data } = await axios.post("/api/payments/refund", { payment_id: paymentId, reason });
-    console.log("Refund Requested:", data);
+    try {
+      const response = await axios.post(
+        "/api/payments/request-refund/",
+        { transaction_id: transactionId, reason },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
+      );
+      setMessage(response.data.message);
+    } catch {
+      setMessage("Refund request failed.");
+    }
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold">Request a Refund</h1>
-      <input type="text" placeholder="Payment ID" value={paymentId} onChange={(e) => setPaymentId(e.target.value)} className="border p-2 w-full mt-2" />
-      <textarea placeholder="Reason for refund" value={reason} onChange={(e) => setReason(e.target.value)} className="border p-2 w-full mt-2" />
-      <button onClick={handleRefundRequest} className="btn mt-4">Submit Refund Request</button>
+    <div>
+      <h2 className="text-lg font-bold">Request a Refund</h2>
+      <textarea value={reason} onChange={(e) => setReason(e.target.value)} className="border p-2 w-full" placeholder="Reason for refund" />
+      <button className="bg-red-500 text-white px-4 py-2 rounded mt-3" onClick={handleRefundRequest}>
+        Submit Request
+      </button>
+      {message && <p className="mt-2">{message}</p>}
     </div>
   );
 };

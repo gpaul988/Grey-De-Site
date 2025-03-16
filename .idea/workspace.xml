@@ -4,9 +4,72 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="Add payment verification and subscription activation endpoints">
+    <list default="true" id="3c00f03c-36c6-4624-b8af-ee48f5b27e15" name="Changes" comment="Added `Invoice` model to generate and manage invoices for services.">
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/invoices/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/payments/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/services/llm_analysis.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/services/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/services/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/subscriptions/admin_views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/subscriptions/celery.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/AdminBookingList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/AdminServiceList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Bookingform.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Checkout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/CurrencyConverter.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/CurrencySelector.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/InvoiceList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/Payment.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/RefundButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceDetails.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceProgress.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/ServiceTracker.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/SubscriptionPlans.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/SubscriptionStatus.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/admin/AdminPayments.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/components/admin/AdminSubscriptions.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/frontend/utils/currencyConverter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Grey-De-Site.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Grey-De-Site.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/grey_infotech_limited._ykYRA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b0ea6cc7-faea-488c-9fb0-8ed83df7b6fd/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/ai/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/utils/email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/api/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/bookings/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/authentication/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/authentication/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/invoices/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/backend/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/celery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/backend/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/llm_service/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/invoices/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/media/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/choices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/payments/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/payments/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/backend/payments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/services/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/refund.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/services/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/services/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/services/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/services/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/payments/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/tasks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/subscriptions/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/subscriptions/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/components/FileUpload.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/FileUpload.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/components/PaymentForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/PaymentForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/components/RefundForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/RefundForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/components/Servicebooking.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/components/Servicebooking.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/pages/admin/subscriptions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/pages/admin/subscriptions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +125,7 @@
     &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/willk/PycharmProjects/Grey-De-Site/apps/frontend/utils&quot;,
@@ -71,7 +135,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\willk\\PycharmProjects\\Grey-De-Site\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -136,8 +200,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
-        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-PY-243.24978.54" />
+        <option value="bundled-python-sdk-91e3b7efe1d4-466328ff949b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.24978.54" />
       </set>
     </attachedChunks>
   </component>
@@ -155,55 +219,11 @@
       <workItem from="1738056970114" duration="14276000" />
       <workItem from="1738178687054" duration="17831000" />
       <workItem from="1738241426567" duration="17161000" />
-      <workItem from="1738281902114" duration="51907000" />
-    </task>
-    <task id="LOCAL-00035" summary="added payment button component">
-      <option name="closed" value="true" />
-      <created>1738460264734</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460264734</updated>
-    </task>
-    <task id="LOCAL-00036" summary="implemented notifications component">
-      <option name="closed" value="true" />
-      <created>1738460296855</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460296855</updated>
-    </task>
-    <task id="LOCAL-00037" summary="configured NextAuth for authentications">
-      <option name="closed" value="true" />
-      <created>1738460330127</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460330127</updated>
-    </task>
-    <task id="LOCAL-00038" summary="added subscription management page">
-      <option name="closed" value="true" />
-      <created>1738460360345</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460360345</updated>
-    </task>
-    <task id="LOCAL-00039" summary="added a login page">
-      <option name="closed" value="true" />
-      <created>1738460376622</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460376622</updated>
-    </task>
-    <task id="LOCAL-00040" summary="implemented file upload components">
-      <option name="closed" value="true" />
-      <created>1738460403583</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1738460403583</updated>
+      <workItem from="1738281902114" duration="63885000" />
+      <workItem from="1738604152160" duration="1491000" />
+      <workItem from="1738805887860" duration="53606000" />
+      <workItem from="1740567373227" duration="205000" />
+      <workItem from="1741528788993" duration="584000" />
     </task>
     <task id="LOCAL-00041" summary="added views for handling file uploads">
       <option name="closed" value="true" />
@@ -549,7 +569,55 @@
       <option name="project" value="LOCAL" />
       <updated>1738576646169</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="Add payment initialization and verification endpoints">
+      <option name="closed" value="true" />
+      <created>1738576883076</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1738576883076</updated>
+    </task>
+    <task id="LOCAL-00085" summary="updated">
+      <option name="closed" value="true" />
+      <created>1738576893298</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1738576893298</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Add RefundForm component for refund requests">
+      <option name="closed" value="true" />
+      <created>1738576999287</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1738576999287</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Add service booking and status update endpoints">
+      <option name="closed" value="true" />
+      <created>1738578748748</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1738578748748</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Add ServiceStatus component for updating service status&#10;&#10;- Created `ServiceStatus` component to allow admins to update the status of a service booking.&#10;- Implemented form fields for booking ID and status selection.&#10;- Added `handleStatusUpdate` function to submit status updates via API.&#10;- Utilized `useState` hook to manage form state.&#10;- Styled form elements with basic CSS classes.">
+      <option name="closed" value="true" />
+      <created>1738578841213</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1738578841213</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Added `Invoice` model to generate and manage invoices for services.">
+      <option name="closed" value="true" />
+      <created>1738579172905</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1738579172905</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -559,12 +627,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.py" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created user context for managing user data" />
-    <MESSAGE value="implemented user list component" />
-    <MESSAGE value="added userole hook for role-based access control" />
-    <MESSAGE value="updated" />
-    <MESSAGE value="updated service field with some more services" />
-    <MESSAGE value="updated user field to reference settings.AUTH_USER_MODEL" />
     <MESSAGE value="updated to add auto renewal" />
     <MESSAGE value="added payment gateways with real-world scenarios" />
     <MESSAGE value="added daily, monthly and yearly  subscription checker and renewal" />
@@ -584,7 +646,13 @@
     <MESSAGE value="Add Payment and RefundRequest models to payments app" />
     <MESSAGE value="Add refund request handling in payments app" />
     <MESSAGE value="Add payment verification and subscription activation endpoints" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add payment verification and subscription activation endpoints" />
+    <MESSAGE value="Add payment initialization and verification endpoints" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="Add RefundForm component for refund requests" />
+    <MESSAGE value="Add service booking and status update endpoints" />
+    <MESSAGE value="Add ServiceStatus component for updating service status&#10;&#10;- Created `ServiceStatus` component to allow admins to update the status of a service booking.&#10;- Implemented form fields for booking ID and status selection.&#10;- Added `handleStatusUpdate` function to submit status updates via API.&#10;- Utilized `useState` hook to manage form state.&#10;- Styled form elements with basic CSS classes." />
+    <MESSAGE value="Added `Invoice` model to generate and manage invoices for services." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added `Invoice` model to generate and manage invoices for services." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

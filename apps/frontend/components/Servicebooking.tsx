@@ -2,32 +2,37 @@ import { useState } from "react";
 import axios from "axios";
 
 const ServiceBooking = () => {
-  const [serviceId, setServiceId] = useState("");
-  const [amount, setAmount] = useState("");
-  const [currency, setCurrency] = useState("USD");
-  const [gateway, setGateway] = useState("paystack");
-  const [scheduledDate, setScheduledDate] = useState("");
+  const [serviceName, setServiceName] = useState("");
+  const [expectedCompletion, setExpectedCompletion] = useState("");
 
   const handleBooking = async () => {
-    const { data } = await axios.post("/api/services/book", { service_id: serviceId, amount, currency, gateway, scheduled_date: scheduledDate });
-    console.log("Booking Created:", data);
+    try {
+      const response = await axios.post("/api/services/book-service/", {
+        service_name: serviceName,
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      setExpectedCompletion(response.data.expected_completion);
+      alert("Service booked successfully.");
+    } catch (error) {
+      console.error("Booking error:", error);
+    }
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold">Book a Service</h1>
-      <input type="text" placeholder="Service ID" value={serviceId} onChange={(e) => setServiceId(e.target.value)} className="border p-2 w-full mt-2" />
-      <input type="number" placeholder="Enter amount" value={amount} onChange={(e) => setAmount(e.target.value)} className="border p-2 w-full mt-2" />
-      <input type="datetime-local" value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} className="border p-2 w-full mt-2" />
-      <select value={currency} onChange={(e) => setCurrency(e.target.value)} className="border p-2 w-full mt-2">
-        <option value="USD">USD</option>
-        <option value="NGN">NGN</option>
+    <div>
+      <h2 className="text-xl font-bold">Book a Service</h2>
+      <select value={serviceName} onChange={(e) => setServiceName(e.target.value)} className="p-2 border rounded">
+        <option value="">Select a Service</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Mobile App Development">Mobile App Development</option>
+        <option value="Blockchain Development">Blockchain Development</option>
       </select>
-      <select value={gateway} onChange={(e) => setGateway(e.target.value)} className="border p-2 w-full mt-2">
-        <option value="paystack">Paystack</option>
-        <option value="flutterwave">Flutterwave</option>
-      </select>
-      <button onClick={handleBooking} className="btn mt-4">Book Service</button>
+      <button onClick={handleBooking} className="bg-green-500 text-white p-2 rounded mt-2">
+        Book Service
+      </button>
+      {expectedCompletion && <p>Expected Completion Date: {expectedCompletion}</p>}
     </div>
   );
 };

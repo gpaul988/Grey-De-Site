@@ -1,11 +1,14 @@
-from celery import shared_task
-from django.utils.timezone import now
-from datetime import timedelta
-from subscriptions.models import UserSubscription
 import requests
-from django.core.mail import send_mail
+from celery import shared_task
+from datetime import timedelta
 from django.conf import settings
-from models import Subscription
+from .models import Subscription
+from payments.models import Payment
+from bookings.models import Booking
+from django.utils.timezone import now
+from django.core.mail import send_mail
+from .models import UserSubscription
+
 
 @shared_task
 def auto_renew_subscriptions():
@@ -125,3 +128,63 @@ def check_yearly_subscriptions():
     yearly_subscriptions = Subscription.objects.filter(plan__duration=365)
     for subscription in yearly_subscriptions:
         subscription.check_status()
+
+def check_and_renew_subscriptions():
+    """Check expired subscriptions and renew if auto-renew is enabled"""
+    subscriptions = Subscription.objects.filter(end_date__lte=now())
+
+    for sub in subscriptions:
+        if sub.auto_renew:
+            sub.renew_subscription()
+        else:
+            sub.enter_grace_period()
+
+
+def notify_users_about_expiry():
+    """Notify users whose subscriptions are expiring soon"""
+    subscriptions = Subscription.objects.filter(end_date__lte=now() + timedelta(days=3))
+
+    for sub in subscriptions:
+        sub.send_expiry_notification()
+
+
+@shared_task
+def process_auto_renewals():
+    """Checks for auto-renewal and processes payments"""
+    bookings = Booking.objects.filter(auto_renewal=True, status="completed")
+
+    for booking in bookings:
+        user = booking.user
+        transaction_id = f"auto_{user.id}_{booking.id}_{now().timestamp()}"
+
+        # Create new payment entry
+        payment = Payment.objects.create(
+            user=user, booking=booking, provider=booking.payment.provider,
+            transaction_id=transaction_id, amount=booking.total_price,
+            currency=booking.currency.code, status="pending"
+        )
+
+        # Simulate successful renewal
+        payment.status = "successful"
+        payment.save()
+        booking.status = "approved"
+        booking.save()
+
+    return f"Processed {bookings.count()} auto-renewals"
+
+@shared_task
+def check_subscription_status():
+    """Updates expired subscriptions and handles grace period"""
+    subscriptions = Subscription.objects.filter(status="active", end_date__lte=now())
+
+    for sub in subscriptions:
+        sub.status = "expired"
+        sub.save()
+
+    grace_subscriptions = Subscription.objects.filter(status="grace", grace_period_end__lte=now())
+
+    for sub in grace_subscriptions:
+        sub.status = "cancelled"
+        sub.save()
+
+    return f"Updated {subscriptions.count()} expired, {grace_subscriptions.count()} cancelled subscriptions."
